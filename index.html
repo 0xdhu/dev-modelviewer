@@ -4,6 +4,32 @@
         <link type="text/css" href="styles/examples.css" rel="stylesheet" />
         <link type="text/css" href="styles/docs.css" rel="stylesheet" />
         <link rel="shortcut icon" type="image/png" href="assets/favicon.png"/>
+        <style>
+          
+            button[slot="hotspot-hand"]{
+              display: block;
+              width: 20px;
+              height: 20px;
+              border-radius: 10px;
+              border: none;
+              background-color: blue;
+              --min-hotspot-opacity: 0;
+              background-color: red;
+            }
+          
+            #annotation{
+              background-color: #888888;
+              position: absolute;
+              transform: translate(10px, 10px);
+              border-radius: 10px;
+              padding: 10px;
+            }
+
+            /* This keeps child nodes hidden while the element loads */
+            :not(:defined) > * {
+              display: none;
+            }
+          </style>
     </head>
     <body>
 
@@ -31,9 +57,18 @@
             </button>
             </div>
         </div>
+
+        <button slot="hotspot-visor" onclick="showAnnotation('annotationaaaa')" data-position="0 1.75 0.35" data-normal="0 0 1"></button>
+        <button slot="hotspot-hand" onclick="showAnnotation('annotationddd')" data-position="-0.54 0.93 0.1" data-normal="-0.73 0.05 0.69">
+            <div id="annotation">This hotspot disappears completely</div>
+        </button>
+        <div id="annotation" onclick="showAnnotation('annotation')">This annotation is fixed in screen-space</div>
     </model-viewer>
 </div>
     <script type="module">
+        function showAnnotation(msg) {
+            alert(msg);
+        }
         const modelViewer = document.querySelector("model-viewer");
     
         window.switchSrc = (element, name) => {
