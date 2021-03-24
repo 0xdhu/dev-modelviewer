@@ -6,15 +6,26 @@
         <link rel="shortcut icon" type="image/png" href="assets/favicon.png"/>
         <style>
           
+            button[slot="hotspot-visor"]{
+              display: block;
+              width: 20px;
+              height: 20px;
+              border-radius: 10px;
+              border: none;
+              --min-hotspot-opacity: 0;
+              background-color: blue;
+              cursor: pointer;
+            }
+
             button[slot="hotspot-hand"]{
               display: block;
               width: 20px;
               height: 20px;
               border-radius: 10px;
               border: none;
-              background-color: blue;
               --min-hotspot-opacity: 0;
               background-color: red;
+              cursor: pointer;
             }
           
             #annotation{
@@ -23,6 +34,7 @@
               transform: translate(10px, 10px);
               border-radius: 10px;
               padding: 10px;
+              cursor: pointer;
             }
 
             /* This keeps child nodes hidden while the element loads */
@@ -58,31 +70,46 @@
             </div>
         </div>
 
-        <button slot="hotspot-visor" onclick="showAnnotation('annotationaaaa')" data-position="0 1.75 0.35" data-normal="0 0 1"></button>
-        <button slot="hotspot-hand" onclick="showAnnotation('annotationddd')" data-position="-0.54 0.93 0.1" data-normal="-0.73 0.05 0.69">
+        <button id="noneslot" slot="hotspot-visor"  data-position="0 1.75 0.35" data-normal="0 0 1"></button>
+        <button id="visibleslot" slot="hotspot-hand" data-position="-0.54 0.93 0.1" data-normal="-0.73 0.05 0.69">
             <div id="annotation">This hotspot disappears completely</div>
         </button>
-        <div id="annotation" onclick="showAnnotation('annotation')">This annotation is fixed in screen-space</div>
+        <div id="annotation">This annotation is fixed in screen-space</div>
     </model-viewer>
 </div>
     <script type="module">
-        function showAnnotation(msg) {
-            alert(msg);
-        }
         const modelViewer = document.querySelector("model-viewer");
-    
+
+        document.querySelector("#noneslot").addEventListener('click', (ev) => {
+        // Keep slider interactions from affecting the XR scene.
+            ev.preventDefault();
+            alert("None slot");
+        });
+
+        document.querySelector("#visibleslot").addEventListener('click', (ev) => {
+        // Keep slider interactions from affecting the XR scene.
+            ev.preventDefault();
+            alert("visibleslot");
+        });
+
+        document.querySelector("#annotation").addEventListener('click', (ev) => {
+        // Keep slider interactions from affecting the XR scene.
+            ev.preventDefault();
+            alert("annotation");
+        });
+
         window.switchSrc = (element, name) => {
-        const base = "assets/ShopifyModels/" + name;
-        modelViewer.src = base + '.glb';
-        modelViewer.poster = base + '.png';
-        const slides = document.querySelectorAll(".slide");
-        slides.forEach((element) => {element.classList.remove("selected");});
-        element.classList.add("selected");
+            const base = "assets/ShopifyModels/" + name;
+            modelViewer.src = base + '.glb';
+            modelViewer.poster = base + '.png';
+            const slides = document.querySelectorAll(".slide");
+            slides.forEach((element) => {element.classList.remove("selected");});
+            element.classList.add("selected");
         };
     
         document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
         // Keep slider interactions from affecting the XR scene.
-        ev.preventDefault();
+            ev.preventDefault();
         });
     </script>
   
