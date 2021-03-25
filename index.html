@@ -23,7 +23,7 @@
                     <div class="slides">
                         <button class="slide selected" onclick="switchSrc(this, 'bundle001')" style="background-image: url('assets/models/bundle001.png');">
                         </button>
-                        <button class="slide" onclick="switchSrc(this, 'Mixer')" style="background-image: url('assets/ShopifyModels/Mixer.png');">
+                        <button class="slide" onclick="switchSrc(this, 'bundle002')" style="background-image: url('assets/models/bundle002.png');">
                         </button>
                         <button class="slide" onclick="switchSrc(this, 'GeoPlanter')" style="background-image: url('assets/ShopifyModels/GeoPlanter.png');">
                         </button>
@@ -58,7 +58,7 @@
         // });
 
         window.switchSrc = (element, name) => {
-            const base = "assets/ShopifyModels/" + name;
+            const base = "assets/models/" + name;
             modelViewer.src = base + '.glb';
             modelViewer.poster = base + '.png';
             const slides = document.querySelectorAll(".slide");
